@@ -17,7 +17,7 @@ package project_05;
 
 import java.util.Scanner;
 
-public class pro03_02 {
+public class pro04_01 {
 
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
