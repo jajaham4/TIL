@@ -1,23 +1,21 @@
 /*
- 문제번호 - 10813번
+  문제번호 - 5597번
  -문제
-  도현이는 바구니를 총 N개 가지고 있고, 각각의 바구니에는 1번부터 N번까지 번호가 매겨져 있다. 바구니에는 공이 1개씩 들어있고, 처음에는 바구니에 적혀있는 번호와 같은 번호가 적힌 공이 들어있다.
-  도현이는 앞으로 M번 공을 바꾸려고 한다. 도현이는 공을 바꿀 바구니 2개를 선택하고, 두 바구니에 들어있는 공을 서로 교환한다.
-  공을 어떻게 바꿀지가 주어졌을 때, M번 공을 바꾼 이후에 각 바구니에 어떤 공이 들어있는지 구하는 프로그램을 작성하시오.
+  X대학 M교수님은 프로그래밍 수업을 맡고 있다. 교실엔 학생이 30명이 있는데, 학생 명부엔 각 학생별로 1번부터 30번까지 출석번호가 붙어 있다.
+  교수님이 내준 특별과제를 28명이 제출했는데, 그 중에서 제출 안 한 학생 2명의 출석번호를 구하는 프로그램을 작성하시오.
  -입력
-  첫째 줄에 N (1 ≤ N ≤ 100)과 M (1 ≤ M ≤ 100)이 주어진다.
-  둘째 줄부터 M개의 줄에 걸쳐서 공을 교환할 방법이 주어진다. 각 방법은 두 정수 i j로 이루어져 있으며, i번 바구니와 j번 바구니에 들어있는 공을 교환한다는 뜻이다. (1 ≤ i ≤ j ≤ N).
-  도현이는 입력으로 주어진 순서대로 공을 교환한다.	
+  입력은 총 28줄로 각 제출자(학생)의 출석번호 n(1 ≤ n ≤ 30)가 한 줄에 하나씩 주어진다. 출석번호에 중복은 없다.
  -출력
-  1번 바구니부터 N번 바구니에 들어있는 공의 번호를 공백으로 구분해 출력한다.
+  출력은 2줄이다. 1번째 줄엔 제출하지 않은 학생의 출석번호 중 가장 작은 것을 출력하고, 2번째 줄에선 그 다음 출석번호를 출력한다.
  */
+
+
 package project_05;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.StringTokenizer;
 import java.io.IOException;
 
 public class pro29_01 {
@@ -25,33 +23,27 @@ public class pro29_01 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        // 첫 번째 줄 읽기
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+        boolean[] submitted = new boolean[31]; // 학생 출석번호는 1부터 30까지
 
-        // 바구니 초기화 (각 바구니에 자기 번호의 공이 들어가 있음)
-        int[] baskets = new int[N];
-        for (int i = 0; i < N; i++) {
-            baskets[i] = i + 1;
+        // 제출된 학생 번호 입력받기
+        for (int i = 0; i < 28; i++) {
+            int studentNumber = Integer.parseInt(br.readLine());
+            submitted[studentNumber] = true;
         }
 
-        // M개의 줄 읽기
-        for (int m = 0; m < M; m++) {
-            st = new StringTokenizer(br.readLine());
-            int i = Integer.parseInt(st.nextToken()) - 1;
-            int j = Integer.parseInt(st.nextToken()) - 1;
-
-            // 두 바구니에 들어있는 공 교환
-            int temp = baskets[i];
-            baskets[i] = baskets[j];
-            baskets[j] = temp;
+        // 제출하지 않은 학생 번호 찾기
+        int[] missingStudents = new int[2];
+        int index = 0;
+        for (int i = 1; i <= 30; i++) {
+            if (!submitted[i]) {
+                missingStudents[index] = i;
+                index++;
+            }
         }
 
-        // 결과 출력
-        for (int n = 0; n < N; n++) {
-            bw.write(baskets[n] + " ");
-        }
+        // 제출하지 않은 학생 번호 출력하기
+        bw.write(missingStudents[0] + "\n");
+        bw.write(missingStudents[1] + "\n");
 
         bw.flush();
         bw.close();
